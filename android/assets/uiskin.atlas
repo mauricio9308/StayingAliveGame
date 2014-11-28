@@ -1,0 +1,282 @@
+
+uiskin.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+main_title
+  rotate: false
+  xy: 1, 728
+  size: 800, 295
+  orig: 800, 295
+  offset: 0, 0
+  index: -1
+boton_iniciar_normal
+  rotate: false
+  xy: 1, 526
+  size: 500, 200
+  orig: 500, 200
+  offset: 0, 0
+  index: -1
+boton_iniciar_pressed
+  rotate: false
+  xy: 1, 324
+  size: 500, 200
+  orig: 500, 200
+  offset: 0, 0
+  index: -1
+boton_piramide_disabled
+  rotate: false
+  xy: 503, 529
+  size: 250, 197
+  orig: 250, 197
+  offset: 0, 0
+  index: -1
+boton_piramide_pressed
+  rotate: false
+  xy: 1, 125
+  size: 250, 197
+  orig: 250, 197
+  offset: 0, 0
+  index: -1
+boton_pelota_normal
+  rotate: false
+  xy: 503, 331
+  size: 250, 196
+  orig: 250, 196
+  offset: 0, 0
+  index: -1
+boton_piramide_normal
+  rotate: false
+  xy: 253, 129
+  size: 250, 193
+  orig: 250, 193
+  offset: 0, 0
+  index: -1
+boton_pelota_pressed
+  rotate: false
+  xy: 505, 139
+  size: 250, 190
+  orig: 250, 190
+  offset: 0, 0
+  index: -1
+boton_torres_normal
+  rotate: false
+  xy: 1, 13
+  size: 250, 110
+  orig: 250, 110
+  offset: 0, 0
+  index: -1
+boton_torres_pressed
+  rotate: false
+  xy: 253, 17
+  size: 250, 110
+  orig: 250, 110
+  offset: 0, 0
+  index: -1
+button_left_normal
+  rotate: false
+  xy: 505, 1
+  size: 136, 136
+  orig: 136, 136
+  offset: 0, 0
+  index: -1
+button_left_pressed
+  rotate: false
+  xy: 643, 1
+  size: 136, 136
+  orig: 136, 136
+  offset: 0, 0
+  index: -1
+button_right_normal
+  rotate: false
+  xy: 803, 887
+  size: 136, 136
+  orig: 136, 136
+  offset: 0, 0
+  index: -1
+button_right_pressed
+  rotate: false
+  xy: 803, 749
+  size: 136, 136
+  orig: 136, 136
+  offset: 0, 0
+  index: -1
+boton_venado_normal
+  rotate: false
+  xy: 755, 556
+  size: 250, 170
+  orig: 250, 170
+  offset: 0, 0
+  index: -1
+boton_venado_pressed
+  rotate: false
+  xy: 755, 384
+  size: 250, 170
+  orig: 250, 170
+  offset: 0, 0
+  index: -1
+boton_mango_normal
+  rotate: false
+  xy: 757, 219
+  size: 250, 163
+  orig: 250, 163
+  offset: 0, 0
+  index: -1
+boton_regresar_normal
+  rotate: false
+  xy: 757, 163
+  size: 200, 54
+  orig: 200, 54
+  offset: 0, 0
+  index: -1
+boton_regresar_pressed
+  rotate: false
+  xy: 781, 107
+  size: 200, 54
+  orig: 200, 54
+  offset: 0, 0
+  index: -1
+button_normal_check
+  rotate: false
+  xy: 781, 2
+  size: 125, 103
+  split: 10, 12, 10, 8
+  orig: 125, 103
+  offset: 0, 0
+  index: -1
+boton_normal
+  rotate: false
+  xy: 908, 6
+  size: 100, 99
+  orig: 100, 99
+  offset: 0, 0
+  index: -1
+check_off
+  rotate: false
+  xy: 941, 988
+  size: 35, 35
+  orig: 35, 35
+  offset: 0, 0
+  index: -1
+check_on
+  rotate: false
+  xy: 959, 182
+  size: 35, 35
+  orig: 35, 35
+  offset: 0, 0
+  index: -1
+slider_mark_v
+  rotate: false
+  xy: 253, 1
+  size: 33, 14
+  orig: 33, 14
+  offset: 0, 0
+  index: -1
+slider_mark
+  rotate: false
+  xy: 1009, 990
+  size: 14, 33
+  orig: 14, 33
+  offset: 0, 0
+  index: -1
+slider_off
+  rotate: false
+  xy: 941, 955
+  size: 13, 31
+  split: 4, 5, 5, 6
+  orig: 13, 31
+  offset: 0, 0
+  index: -1
+slider_on
+  rotate: false
+  xy: 978, 994
+  size: 12, 29
+  split: 4, 4, 5, 4
+  orig: 12, 29
+  offset: 0, 0
+  index: -1
+knob
+  rotate: false
+  xy: 757, 141
+  size: 1, 20
+  orig: 1, 20
+  offset: 0, 0
+  index: -1
+
+uiskin2.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+boton_mango_pressed
+  rotate: false
+  xy: 1, 288
+  size: 250, 163
+  orig: 250, 163
+  offset: 0, 0
+  index: -1
+boton_mangos_normal
+  rotate: false
+  xy: 1, 144
+  size: 250, 142
+  orig: 250, 142
+  offset: 0, 0
+  index: -1
+boton_final_normal
+  rotate: false
+  xy: 253, 310
+  size: 250, 141
+  orig: 250, 141
+  offset: 0, 0
+  index: -1
+boton_final_pressed
+  rotate: false
+  xy: 1, 1
+  size: 250, 141
+  orig: 250, 141
+  offset: 0, 0
+  index: -1
+boton_flores_normal
+  rotate: false
+  xy: 253, 205
+  size: 250, 103
+  orig: 250, 103
+  offset: 0, 0
+  index: -1
+boton_flores_pressed
+  rotate: false
+  xy: 505, 348
+  size: 250, 103
+  orig: 250, 103
+  offset: 0, 0
+  index: -1
+button_normal
+  rotate: false
+  xy: 253, 103
+  size: 122, 100
+  split: 7, 10, 8, 10
+  orig: 122, 100
+  offset: 0, 0
+  index: -1
+button_pressed
+  rotate: false
+  xy: 505, 246
+  size: 122, 100
+  split: 7, 11, 8, 11
+  orig: 122, 100
+  offset: 0, 0
+  index: -1
+boton_pressed
+  rotate: false
+  xy: 757, 352
+  size: 100, 99
+  orig: 100, 99
+  offset: 0, 0
+  index: -1
+button_disabled
+  rotate: false
+  xy: 253, 19
+  size: 100, 82
+  split: 5, 7, 6, 8
+  orig: 100, 82
+  offset: 0, 0
+  index: -1
