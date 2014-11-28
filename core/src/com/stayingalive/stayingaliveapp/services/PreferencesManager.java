@@ -14,6 +14,7 @@ public class PreferencesManager{
     private static final String PREF_NAME = "Staying.Alive..pref";
     private static final String PREF_IS_SOUND_ACTIVE = "Staying.Alive.sound.pref";
     private static final String PREF_IS_MUSIC_ACTIVE = "Staying.Alive.music.pref";
+    private static final String PREF_HIGH_SCORES = "Staying.Alive.high_scores.pref";
 
     private static PreferencesManager mManager;
     private Preferences mPreferences;
@@ -50,6 +51,15 @@ public class PreferencesManager{
 
     public boolean isMusicEnabled(){
         return mPreferences.getBoolean(PREF_IS_MUSIC_ACTIVE);
+    }
+
+    public String getHighScores(){
+        return mPreferences.getString(PREF_HIGH_SCORES);
+    }
+
+    public void setHighScores( String highScores ){
+        mPreferences.putString( PREF_HIGH_SCORES, highScores );
+        mPreferences.flush();
     }
 
 }
