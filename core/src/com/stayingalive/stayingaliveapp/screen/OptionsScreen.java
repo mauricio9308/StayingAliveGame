@@ -1,5 +1,9 @@
 package com.stayingalive.stayingaliveapp.screen;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
@@ -23,6 +27,7 @@ public class OptionsScreen extends AbstractScreen {
     private final SoundManager mSoundManager;
     private final MusicManager mMusicManager;
 
+
     public OptionsScreen(StayingAliveGame game) {
         super(game);
 
@@ -31,13 +36,11 @@ public class OptionsScreen extends AbstractScreen {
         mSoundManager = game.getSoundManager(); 
     }
 
-
     @Override
     public void show(){
         super.show();
         Table table = super.getTable();
-        setBackground( "background-3.png");
-
+        setBackground( "background-all.png");
 
         final CheckBox musicCheckbox = new CheckBox("Music", getSkin());
         musicCheckbox.setChecked( mPreferencesManager.isMusicEnabled() );
@@ -66,7 +69,6 @@ public class OptionsScreen extends AbstractScreen {
             }
         });
 
-
         final TextButton back = new TextButton("Back", getSkin() );
         back.setSize(48,48);
         back.addListener( new ClickListener(){
@@ -77,22 +79,27 @@ public class OptionsScreen extends AbstractScreen {
         });
 
         //first row
-        table.row().expand().top().left().padBottom(100);
-        table.add( back );
+        table.add( back ).left().padBottom(100).expandX();
+        table.row();
+
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator( Gdx.files.internal("fonts/Prisma.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = 120;
+        BitmapFont titleFont = generator.generateFont(parameter);
+
+        Label.LabelStyle style = new Label.LabelStyle( titleFont, Color.WHITE );
 
         //second row
-        table.row().padBottom(100);
-        Label label = new Label("Options", getSkin());
-        label.setFontScale(5);
-        table.add(label);
+        Label label = new Label("Options", style);
+        table.add(label).padBottom(100);
 
         //third row
-        table.row().padBottom(100);
-        table.add(soundCheckbox).colspan(3);
+        table.row();
+        table.add(soundCheckbox).colspan(3).padBottom(100);
 
         //fourth row
-        table.row().padBottom(100);
-        table.add(musicCheckbox).colspan(3);
+        table.row();
+        table.add(musicCheckbox).colspan(3).padBottom(100);
     }
 
 }
