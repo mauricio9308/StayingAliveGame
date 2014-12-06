@@ -26,7 +26,7 @@ public abstract class AbstractScreen implements Screen{
 
     public AbstractScreen( StayingAliveGame game ){
         mGame = game;
-        mStage = new Stage(new StretchViewport(ViewPortConstants.VIEWPORT_WIDTH, ViewPortConstants.VIEWPOT_HEIGHT));
+        mStage = new Stage(new StretchViewport(ViewPortConstants.VIEWPORT_WIDTH, ViewPortConstants.VIEWPORT_HEIGHT));
     }
 
     public String getName(){
@@ -83,7 +83,7 @@ public abstract class AbstractScreen implements Screen{
     public void setBackground( String resourcePath ){
         Texture background = new Texture( resourcePath );
         getTable().setBackground(new TextureRegionDrawable(new TextureRegion(background, 0, 0,
-                ViewPortConstants.VIEWPORT_WIDTH, ViewPortConstants.VIEWPOT_HEIGHT)));
+                ViewPortConstants.VIEWPORT_WIDTH, ViewPortConstants.VIEWPORT_HEIGHT)));
 
     }
 

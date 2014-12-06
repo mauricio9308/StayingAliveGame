@@ -81,7 +81,7 @@ public class StayingAliveGame extends Game {
         super.resize(width, height);
         Gdx.app.log(StayingAliveGame.LOG, "Cambiando resolución a " + width + "x" + height);
         factorX = ViewPortConstants.VIEWPORT_WIDTH / (float) width;
-        factorY = ViewPortConstants.VIEWPOT_HEIGHT / (float) height;
+        factorY = ViewPortConstants.VIEWPORT_HEIGHT / (float) height;
 
         if (getScreen() == null) {
             setScreen(new SplashScreen(this));
