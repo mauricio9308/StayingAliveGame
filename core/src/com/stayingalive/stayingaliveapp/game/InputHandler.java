@@ -1,18 +1,11 @@
 package com.stayingalive.stayingaliveapp.game;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
-import com.stayingalive.stayingaliveapp.screen.ViewPortConstants;
 
 /**
  * Created by mauriciolara on 11/28/14.
@@ -28,9 +21,6 @@ import com.stayingalive.stayingaliveapp.screen.ViewPortConstants;
  */
 public class InputHandler {
 
-    private OrthographicCamera mCamera;
-    private SpriteBatch mBatch;
-    private BitmapFont mFont;
     private Stage mStage;
 
     private Touchpad mTouchpad;
@@ -45,27 +35,12 @@ public class InputHandler {
 
     public InputHandler(Stage stage){
         mStage = stage;
-        mCamera = new OrthographicCamera(ViewPortConstants.VIEWPORT_WIDTH,
-                ViewPortConstants.VIEWPORT_HEIGHT);
-        mBatch = new SpriteBatch();
-    }
-
-    public void setAssets(AssetManager manager){
-        initializeBitmapFont();
-    }
-
-    /* initialize the font */
-    private void initializeBitmapFont(){
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/Prisma.ttf"));
-        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 120;
-        mFont = generator.generateFont(parameter); // font size 12 pixels
     }
 
     private void initializeTouchpad(){
         mTouchpadSkin = new Skin();
-        mTouchpadSkin.add("touchpadBackground", new Texture("touchpad/touchBackground.png"));
-        mTouchpadSkin.add("touchKnob", new Texture("touchpad/touchKnob.png"));
+        mTouchpadSkin.add("touchpadBackground", new Texture("touchpad/TouchpadOuter.png"));
+        mTouchpadSkin.add("touchKnob", new Texture("touchpad/TouchpadIntro.png"));
 
         mTouchpadStyle = new Touchpad.TouchpadStyle();
 
@@ -121,20 +96,26 @@ public class InputHandler {
      *
      * */
     public void show(){
-        initializeBitmapFont();
         initializeTouchpad();
         initializeButtons();
     }
 
+    public InputValues render(){
+        InputValues values = new InputValues();
+        values.knobPercentageX = mTouchpad.getKnobPercentX();
+        values.knobPercentageY = mTouchpad.getKnobPercentY();
 
-    public float[] render(){
-        mCamera.update();
-
-        float[] touchpadValues = new float[2];
-        touchpadValues[0] = mTouchpad.getKnobPercentX();
-        touchpadValues[1] = mTouchpad.getKnobPercentY();
-
-        return touchpadValues;
+        return values;
     }
+
+    /**
+     *
+     * Simple container class that contains the touchpad event values
+     * */
+    public static class InputValues{
+        public float knobPercentageX;
+        public float knobPercentageY;
+    }
+
 
 }

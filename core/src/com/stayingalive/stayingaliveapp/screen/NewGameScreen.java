@@ -7,10 +7,14 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.stayingalive.stayingaliveapp.StayingAliveGame;
+import com.stayingalive.stayingaliveapp.game.InputHandler;
 import com.stayingalive.stayingaliveapp.game.World;
 import com.stayingalive.stayingaliveapp.game.WorldRenderer;
 import com.stayingalive.stayingaliveapp.services.HighScore;
@@ -21,10 +25,14 @@ import com.stayingalive.stayingaliveapp.services.HighScoresManager;
  */
 public class NewGameScreen extends AbstractScreen implements World.WorldListener {
 
+    private static final String GAME_BACKGROUND_PATH = "background-3.png";
+    private static final String CONTROLLERS_BACKGROUND_PATH = "background-all.png";
+
     public final int GAME_READY = 1;
     public final int GAME_RUNNING = 2;
     public final int GAME_OVER = 3;
 
+    private InputHandler mInputHandler;
     public OrthographicCamera mCamera;
     public World mWorld;
     public WorldRenderer mRenderer;
@@ -103,7 +111,7 @@ public class NewGameScreen extends AbstractScreen implements World.WorldListener
         // TODO play hit sound
     }
 
-    public void update( float deltaTime ){
+    public void update( float deltaTime, InputHandler.InputValues values ){
         if( deltaTime > 0.1f ){
             deltaTime = 0.1f;
         }
@@ -113,7 +121,7 @@ public class NewGameScreen extends AbstractScreen implements World.WorldListener
                 updateReady();
                 break;
             case GAME_RUNNING:
-                updateRunning( deltaTime );
+                updateRunning( deltaTime, values );
                 break;
             case GAME_OVER:
                 updateGameOver();
@@ -127,9 +135,9 @@ public class NewGameScreen extends AbstractScreen implements World.WorldListener
         }
     }
 
-    private void updateRunning( float deltaTime ){
+    private void updateRunning( float deltaTime, InputHandler.InputValues values ){
         // Here we are going to update the game mechanics
-        mWorld.update( deltaTime, 1 );
+        mWorld.update( deltaTime, values );
         if( mWorld.timeSoFar != time ){
             time = mWorld.timeSoFar;
             scoreString = "TIME: " + time;
@@ -175,9 +183,11 @@ public class NewGameScreen extends AbstractScreen implements World.WorldListener
     }
 
     private void presentReady(){
+        TextureAtlas atlas = getGame().getAssetManager().get("StayingAlive.atlas", TextureAtlas.class );
+
         // We draw the ready image
         mBatch.draw(
-                getGame().getAssetManager().get("StayingAlive.atlas", TextureAtlas.class).findRegion("DudeStanding"),
+                atlas.findRegion("DudeStanding"),
                 (ViewPortConstants.VIEWPORT_WIDTH / 2) - 100 /* x-position */,
                 ViewPortConstants.VIEWPORT_HEIGHT / 2/* y-position */,
                 200 /* width */,
@@ -190,7 +200,87 @@ public class NewGameScreen extends AbstractScreen implements World.WorldListener
     }
 
     private void presentRunning(){
-        scoreFont.draw( mBatch, scoreString, 16, ViewPortConstants.VIEWPORT_HEIGHT - 20);
+        TextureAtlas atlas = getGame().getAssetManager().get("StayingAlive.atlas", TextureAtlas.class );
+        final int CANNON_SIZE = 250;
+        final TextureRegion cannon = atlas.findRegion("Cannon");
+
+        /* left side cannons */
+
+        // left_lower
+        mBatch.draw( cannon.getTexture(),
+                -190  /* x-position */,
+                ViewPortConstants.CONTROLLER_HEIGHT + 85 /* y-position */,
+                0 /* originX */,
+                0 /* originY */,
+                CANNON_SIZE /* width */, CANNON_SIZE /* height */,
+                1 /* scaleX */, 1 /* scaleY */,
+                335 /* rotation */, cannon.getRegionX() /* srcX */, cannon.getRegionY()/* srcY */,
+                cannon.getRegionWidth() /* srcWidth */, cannon.getRegionHeight() /* srcHeight */,
+                true /* flipX */, false /* flipY */
+        );
+
+        // left_upper
+        mBatch.draw( cannon.getTexture(),
+                -180  /* x-position */,
+                ViewPortConstants.VIEWPORT_HEIGHT - 110 /* y-position */,
+                0 /* originX */,
+                0 /* originY */,
+                CANNON_SIZE /* width */, CANNON_SIZE /* height */,
+                1 /* scaleX */, 1 /* scaleY */,
+                290 /* rotation */, cannon.getRegionX() /* srcX */, cannon.getRegionY()/* srcY */,
+                cannon.getRegionWidth() /* srcWidth */, cannon.getRegionHeight() /* srcHeight */,
+                true /* flipX */, false /* flipY */
+        );
+
+        /* right side cannons */
+
+        // right_lower
+        mBatch.draw( cannon,
+                ViewPortConstants.VIEWPORT_WIDTH + 200  /* x-position */,
+                ViewPortConstants.CONTROLLER_HEIGHT + 100 /* y-position */,
+                0 /* originX */,
+                0 /* originY */,
+                CANNON_SIZE /* width */, CANNON_SIZE /* height */,
+                1 /* scaleX */, 1 /* scaleY */,
+                120 /* rotation */, true /* isClockwise */
+        );
+
+        // right_upper
+        mBatch.draw( cannon,
+                ViewPortConstants.VIEWPORT_WIDTH + 180/* x-position */,
+                ViewPortConstants.VIEWPORT_HEIGHT - 100 /* y-position */,
+                0 /* originX */,
+                0 /* originY */,
+                CANNON_SIZE /* width */, CANNON_SIZE /* height */,
+                1 /* scaleX */, 1 /* scaleY */,
+                160 /* rotation */, true /* isClockwise */
+        );
+
+        /* top side cannons */
+
+        // top_left
+        mBatch.draw( cannon,
+                200  /* x-position */,
+                ViewPortConstants.VIEWPORT_HEIGHT + 190 /* y-position */,
+                0 /* originX */,
+                0 /* originY */,
+                CANNON_SIZE /* width */, CANNON_SIZE /* height */,
+                1 /* scaleX */, 1 /* scaleY */,
+                210 /* rotation */, true /* isClockwise */
+        );
+
+        // top_right
+        mBatch.draw( cannon,
+                ViewPortConstants.VIEWPORT_WIDTH - 100 /* x-position */,
+                ViewPortConstants.VIEWPORT_HEIGHT + 190 /* y-position */,
+                0 /* originX */,
+                0 /* originY */,
+                CANNON_SIZE /* width */, CANNON_SIZE /* height */,
+                1 /* scaleX */, 1 /* scaleY */,
+                210 /* rotation */, true /* isClockwise */
+        );
+
+        scoreFont.draw(mBatch, scoreString, 16, ViewPortConstants.VIEWPORT_HEIGHT - 20);
     }
 
     private void presentGameOver(){
@@ -209,11 +299,47 @@ public class NewGameScreen extends AbstractScreen implements World.WorldListener
                 (ViewPortConstants.VIEWPORT_HEIGHT / 2) - 125);
     }
 
+    /**
+     * Via this function we split the screen via two tables
+     * */
+    private void initializeGameBackground(){
+         /* set up the division */
+        final Table table = getTable();
+
+        Table gameTable = new Table();
+
+        // Image gameBackground = new Image( getGame().getAssetManager().get("StayingAlive.atlas", TextureAtlas.class).findRegion("Cannon") );
+        // gameTable.setBackground( gameBackground.getDrawable() );
+        table.add( gameTable ).size( ViewPortConstants.VIEWPORT_WIDTH, ViewPortConstants.GAME_CONTAINER_HEIGHT).top();
+        table.row();
+
+        /* controller part of the tables  */
+        Table buttonsTable = new Table();
+        buttonsTable.setSize( ViewPortConstants.VIEWPORT_WIDTH, ViewPortConstants.CONTROLLER_HEIGHT );
+
+        Image buttonsBackground = new Image( getGame().getAssetManager().get("uiskin/uiskin.atlas", TextureAtlas.class).findRegion("ControllerBG") );
+        buttonsTable.setBackground( buttonsBackground.getDrawable() );
+
+        table.add(buttonsTable).size( ViewPortConstants.VIEWPORT_WIDTH, ViewPortConstants.CONTROLLER_HEIGHT );
+    }
+
+    @Override
+    public void show(){
+        super.show();
+        initializeGameBackground();
+
+         /* initialize the game */
+        mInputHandler = new InputHandler( getStage() );
+        mInputHandler.show();
+    }
+
     @Override
     public void render( float delta ){
-        super.render( delta );
-        update( delta );
+        update( delta, mInputHandler.render() );
         draw();
+
+        mStage.act( Gdx.graphics.getDeltaTime() );
+        mStage.draw();
     }
 
     @Override

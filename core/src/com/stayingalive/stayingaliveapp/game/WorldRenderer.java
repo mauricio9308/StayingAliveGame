@@ -46,6 +46,9 @@ public class WorldRenderer {
             case Dude.DUDE_STATE_JUMP:
                 keyFrame = mGame.getAssetManager().get("StayingAlive.atlas", TextureAtlas.class ).findRegion("DudeJumping");
                 break;
+            case Dude.DUDE_STATE_FALL:
+                keyFrame = mGame.getAssetManager().get("StayingAlive.atlas", TextureAtlas.class ).findRegion("DudeDucking");
+                break;
             case Dude.DUDE_STATE_NORMAL:
             case Dude.DUDE_STATE_HIT:
             default:
@@ -53,12 +56,7 @@ public class WorldRenderer {
             break;
         }
 
-        float side = mWorld.mDude.mVelocity.x < 0 ? -1 : 1;
-        if( side < 0 ){
-            mBatch.draw( keyFrame, mWorld.mDude.mPosition.x + 0.5f, mWorld.mDude.mPosition.y - 0.5f, side * 1, 1);
-        }else{
-            mBatch.draw( keyFrame, mWorld.mDude.mPosition.x - 0.5f, mWorld.mDude.mPosition.y - 0.5f, side * 1, 1);
-        }
+        mBatch.draw( keyFrame, mWorld.mDude.mPosition.x, mWorld.mDude.mPosition.y);
     }
 
 }

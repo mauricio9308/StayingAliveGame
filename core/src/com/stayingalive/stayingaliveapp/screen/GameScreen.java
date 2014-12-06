@@ -40,7 +40,6 @@ public class GameScreen extends AbstractScreen{
 
          /* initialize the game */
         mInputHandler = new InputHandler( getStage() );
-        mInputHandler.setAssets( getGame().getAssetManager() );
         mInputHandler.show();
 
         initializeDude();
@@ -54,6 +53,7 @@ public class GameScreen extends AbstractScreen{
        Gdx.gl.glClearColor(0.294f, 0.294f, 0.294f, 1f);
        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        /*
        float[] touchpadValues = mInputHandler.render();
 
        float newX = mDudeSprite.getX() + ( touchpadValues[0] * mDudeSpeed);
@@ -69,7 +69,7 @@ public class GameScreen extends AbstractScreen{
        mBatch.end();
 
        mStage.act( Gdx.graphics.getDeltaTime() );
-       mStage.draw();
+       mStage.draw();*/
     }
 
     private boolean isValidPosition( float newX, float newY ){

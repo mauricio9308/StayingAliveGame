@@ -18,7 +18,7 @@ public class World {
     public static final int WORLD_STATE_RUNNING = 1;
     public static final int WORLD_STATE_GAME_OVER = 2;
 
-    public static final Vector2 mGravity = new Vector2( 0, -12 );
+    public static final Vector2 mGravity = new Vector2( 0, -500 );
 
     public final Dude mDude;
     public final WorldListener mWorldListener;
@@ -29,30 +29,36 @@ public class World {
     public int state;
 
     public World( WorldListener listener ){
-        mDude = new Dude(10,10);
+        // we create the dude and put it above the controls
+        mDude = new Dude( (ViewPortConstants.VIEWPORT_WIDTH / 2) - Dude.DUDE_WIDTH /* x-position */,
+                ViewPortConstants.CONTROLLER_HEIGHT) /* y-position */;
         mWorldListener = listener;
-
         mRandom = new Random();
     }
 
-    public void update( float deltaTime, float xMovementFactor ){
-        updateDude( deltaTime,xMovementFactor );
+    public void update( float deltaTime, InputHandler.InputValues values ){
+        updateDude( deltaTime, values );
         if( mDude.state != mDude.DUDE_STATE_HIT ){
-            // TODO check collisions
             checkCannonBallCollisions();
         }
 
+        checkGameOver();
         timeSoFar++;
     }
 
-    public void updateDude( float deltaTime, float xMovementFactor ){
+    public void updateDude( float deltaTime, InputHandler.InputValues values ){
         if( mDude.state != Dude.DUDE_STATE_HIT ){
-            mDude.mVelocity.x = - xMovementFactor / 10 * Dude.DUDE_MOVE_VELOCITY;
+            mDude.mVelocity.x = values.knobPercentageX * Dude.DUDE_MOVE_VELOCITY;
+            mDude.mVelocity.y = values.knobPercentageY;
         }
         mDude.update( deltaTime );
     }
 
     private void checkCannonBallCollisions(){
+
+    }
+
+    private void checkGameOver(){
 
     }
 

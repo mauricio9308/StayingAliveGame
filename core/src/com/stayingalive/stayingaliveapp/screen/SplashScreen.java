@@ -28,8 +28,8 @@ public class SplashScreen extends AbstractScreen {
 
         Table table = super.getTable();
 
-        Texture back = new Texture("background-1.png");
-        table.setBackground(new TextureRegionDrawable(new TextureRegion(back, 0, 0, 1024, 768)));
+        Texture back = new Texture("Splash.png");
+        table.setBackground(new TextureRegionDrawable(new TextureRegion(back, 0, 0, 768, 1024)));
 
         loadAssets();
     }
@@ -59,6 +59,7 @@ public class SplashScreen extends AbstractScreen {
         assetManager.load( GameMusic.MENU_MUSIC.getFileName(), Music.class );
 
         assetManager.load("StayingAlive.atlas", TextureAtlas.class );
+        assetManager.load("uiskin/uiskin.atlas", TextureAtlas.class );
     }
 
 }

@@ -52,51 +52,30 @@ Shield
   orig: 93, 152
   offset: 0, 0
   index: -1
-BackArrow
+PowerUp-Bomb
   rotate: false
   xy: 527, 623
   size: 110, 110
   orig: 110, 110
   offset: 0, 0
   index: -1
-Button-PowerUp-Bomb
+PowerUp-Shield
   rotate: false
   xy: 1, 1
   size: 110, 110
   orig: 110, 110
   offset: 0, 0
   index: -1
-Button-PowerUp-Empty
+PowerUp-SlowDown - Copy
   rotate: false
   xy: 639, 623
   size: 110, 110
   orig: 110, 110
   offset: 0, 0
   index: -1
-Button-PowerUp-Shield
-  rotate: false
-  xy: 751, 623
-  size: 110, 110
-  orig: 110, 110
-  offset: 0, 0
-  index: -1
-Button-PowerUp-SlowDown
-  rotate: false
-  xy: 863, 675
-  size: 110, 110
-  orig: 110, 110
-  offset: 0, 0
-  index: -1
-Button-Shield
-  rotate: false
-  xy: 470, 493
-  size: 110, 110
-  orig: 110, 110
-  offset: 0, 0
-  index: -1
 Cannonball
   rotate: false
-  xy: 470, 406
+  xy: 751, 648
   size: 85, 85
   orig: 85, 85
   offset: 0, 0
