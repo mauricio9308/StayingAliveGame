@@ -32,7 +32,19 @@ public class HighScoresScreen extends AbstractScreen{
 
         final Table table = getTable();
         setBackground("background-all.png");
-        addBackButton( table );
+
+        final TextButton back = new TextButton("Back", getSkin() );
+        back.setSize(48,48);
+        back.addListener( new ClickListener(){
+            @Override
+            public void clicked( InputEvent event, float x, float y ){
+                getGame().setScreen( new MainScreen( getGame() ));
+            }
+        });
+
+        table.left().top();
+        table.add( back ).left();
+        table.row();
 
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator( Gdx.files.internal("fonts/Prisma.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -40,9 +52,9 @@ public class HighScoresScreen extends AbstractScreen{
         BitmapFont titleFont = generator.generateFont(parameter);
 
         Label.LabelStyle style = new Label.LabelStyle( titleFont, Color.WHITE );
-        Label highScoresLabel = new Label("High scores", style);
+        Label highScoresLabel = new Label("High Scores", style);
 
-        table.add( highScoresLabel ).padBottom( 100 );
+        table.add( highScoresLabel ).padTop( 70 ).expandX();
         table.row();
 
         FreeTypeFontGenerator.FreeTypeFontParameter highScoreParams = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -54,33 +66,17 @@ public class HighScoresScreen extends AbstractScreen{
         if( HIGHSCORES == null || HIGHSCORES.length == 0 ){
             /* there are no high scores */
             Label emptyHighScores = new Label( "There are no high scores", highStyle );
-            table.add( emptyHighScores ).center().colspan(3);
+            table.add( emptyHighScores ).center().colspan(3).padTop( 100 );
         }else{
-            for( HighScore highScore : HIGHSCORES ){
+            for( HighScore highScore : HIGHSCORES ) {
                 // TODO create parser
-                Label highScoreLabel = new Label( highScore.getName() + ": " + highScore.getTimeInMillis(), highStyle );
-                table.add( highScoreLabel ).center().colspan(3).padBottom(40);
+                Label highScoreLabel = new Label(highScore.getName() + ": " + highScore.getTimeInMillis(), highStyle);
+                table.add(highScoreLabel).center().colspan(3).padTop(40);
                 table.row();
             }
         }
 
+
         generator.dispose(); //we release unnecesary resources
-    }
-
-
-    private void addBackButton( Table table ){
-
-        final TextButton back = new TextButton("Back", getSkin() );
-        back.setSize(48,48);
-        back.addListener( new ClickListener(){
-            @Override
-            public void clicked( InputEvent event, float x, float y ){
-                getGame().setScreen( new MainScreen( getGame() ));
-            }
-        });
-
-        //first row
-        table.add( back ).left().padBottom(100).expandX();
-        table.row();
     }
 }
