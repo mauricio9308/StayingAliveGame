@@ -57,12 +57,11 @@ public class MainScreen extends AbstractScreen{
                 /* Send to options screen*/
                 final StayingAliveGame game = getGame();
 
-                game.setScreen( new GameScreen(getGame() ));
+                game.setScreen( new NewGameScreen(getGame() ));
                 //game.getSoundManager().play(StayingAliveSound.CLICK);
             }
         });
 
-        // TODO fix this!!! evade at all cost fixed values
         table.add( bttnBeginGame ).size(400, 100).padBottom(40).colspan(10);
         table.row();
 
