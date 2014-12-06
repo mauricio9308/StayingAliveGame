@@ -48,9 +48,6 @@ public class InputHandler {
         mCamera = new OrthographicCamera(ViewPortConstants.VIEWPORT_WIDTH,
                 ViewPortConstants.VIEWPORT_HEIGHT);
         mBatch = new SpriteBatch();
-        mCamera.position.set((ViewPortConstants.VIEWPORT_WIDTH/2),
-                (ViewPortConstants.VIEWPORT_HEIGHT /2),0f);
-        mCamera.update();
     }
 
     public void setAssets(AssetManager manager){

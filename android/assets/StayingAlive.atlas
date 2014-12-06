@@ -1,0 +1,103 @@
+
+StayingAlive.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Explosion
+  rotate: false
+  xy: 1, 605
+  size: 524, 400
+  orig: 524, 400
+  offset: 0, 0
+  index: -1
+Cannon
+  rotate: false
+  xy: 1, 333
+  size: 305, 270
+  orig: 305, 270
+  offset: 0, 0
+  index: -1
+CannonFiring
+  rotate: false
+  xy: 527, 735
+  size: 305, 270
+  orig: 305, 270
+  offset: 0, 0
+  index: -1
+DudeDucking
+  rotate: false
+  xy: 1, 113
+  size: 160, 218
+  orig: 160, 218
+  offset: 0, 0
+  index: -1
+DudeJumping
+  rotate: false
+  xy: 308, 385
+  size: 160, 218
+  orig: 160, 218
+  offset: 0, 0
+  index: -1
+DudeStanding
+  rotate: false
+  xy: 834, 787
+  size: 160, 218
+  orig: 160, 218
+  offset: 0, 0
+  index: -1
+Shield
+  rotate: false
+  xy: 163, 179
+  size: 93, 152
+  orig: 93, 152
+  offset: 0, 0
+  index: -1
+BackArrow
+  rotate: false
+  xy: 527, 623
+  size: 110, 110
+  orig: 110, 110
+  offset: 0, 0
+  index: -1
+Button-PowerUp-Bomb
+  rotate: false
+  xy: 1, 1
+  size: 110, 110
+  orig: 110, 110
+  offset: 0, 0
+  index: -1
+Button-PowerUp-Empty
+  rotate: false
+  xy: 639, 623
+  size: 110, 110
+  orig: 110, 110
+  offset: 0, 0
+  index: -1
+Button-PowerUp-Shield
+  rotate: false
+  xy: 751, 623
+  size: 110, 110
+  orig: 110, 110
+  offset: 0, 0
+  index: -1
+Button-PowerUp-SlowDown
+  rotate: false
+  xy: 863, 675
+  size: 110, 110
+  orig: 110, 110
+  offset: 0, 0
+  index: -1
+Button-Shield
+  rotate: false
+  xy: 470, 493
+  size: 110, 110
+  orig: 110, 110
+  offset: 0, 0
+  index: -1
+Cannonball
+  rotate: false
+  xy: 470, 406
+  size: 85, 85
+  orig: 85, 85
+  offset: 0, 0
+  index: -1

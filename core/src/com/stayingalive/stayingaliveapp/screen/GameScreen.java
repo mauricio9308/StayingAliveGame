@@ -77,7 +77,7 @@ public class GameScreen extends AbstractScreen{
             return false;
         }
 
-        if( newY > ViewPortConstants.VIEWPORT_HEIGHT || newY < ViewPortConstants.CONTROLLER_HEIGHT ){
+        if( newY > ViewPortConstants.VIEWPORT_HEIGHT || newY < (ViewPortConstants.CONTROLLER_HEIGHT + 30) ){
             return false;
         }
 
@@ -92,10 +92,8 @@ public class GameScreen extends AbstractScreen{
         final Table table = getTable();
 
         Table gameTable = new Table();
-        //Texture gameTableBackground = new Texture( GAME_BACKGROUND_PATH );
-        //gameTable.setBackground(new TextureRegionDrawable(new TextureRegion(gameTableBackground, 0, 0,
-        //        ViewPortConstants.GAME_CONTAINER_HEIGHT, ViewPortConstants.VIEWPORT_WIDTH)));
-
+       // Image gameBackground = new Image( getGame().getAssetManager().get("StayingAlive.atlas", TextureAtlas.class).findRegion("Cannon") );
+       // gameTable.setBackground( gameBackground.getDrawable() );
         table.add( gameTable ).size( ViewPortConstants.VIEWPORT_WIDTH, ViewPortConstants.GAME_CONTAINER_HEIGHT).top();
         table.row();
 

@@ -4,6 +4,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -56,6 +57,8 @@ public class SplashScreen extends AbstractScreen {
         final AssetManager assetManager = getGame().getAssetManager();
         assetManager.load("fonts/default-32.fnt", BitmapFont.class);
         assetManager.load( GameMusic.MENU_MUSIC.getFileName(), Music.class );
+
+        assetManager.load("StayingAlive.atlas", TextureAtlas.class );
     }
 
 }
