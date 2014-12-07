@@ -45,9 +45,7 @@ public class HighScoresManager {
         Json jsonParser = new Json();
         HighScore[] previousHighScores = getHighScores();
 
-        String highScoresJson;
         HighScore[] newHighScores;
-
 
         if( previousHighScores == null || previousHighScores.length == 0 ){
             newHighScores = new HighScore[1];

@@ -10,6 +10,10 @@ public class HighScore {
     private String mName;
     private double mTimeInMillis;
 
+    public HighScore(){
+
+    }
+
     public HighScore(String name, double timeInMillis){
         mName = name;
         mTimeInMillis = timeInMillis;

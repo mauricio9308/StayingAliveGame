@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.stayingalive.stayingaliveapp.StayingAliveGame;
 import com.stayingalive.stayingaliveapp.game.InputHandler;
+import com.stayingalive.stayingaliveapp.game.PowerUp;
 import com.stayingalive.stayingaliveapp.game.World;
 import com.stayingalive.stayingaliveapp.game.WorldRenderer;
 import com.stayingalive.stayingaliveapp.services.HighScore;
@@ -23,7 +24,7 @@ import com.stayingalive.stayingaliveapp.services.HighScoresManager;
 /**
  * Created by mauriciolara on 11/29/14.
  */
-public class NewGameScreen extends AbstractScreen implements World.WorldListener {
+public class NewGameScreen extends AbstractScreen implements World.WorldListener, InputHandler.Callbacks {
 
     private static final String GAME_BACKGROUND_PATH = "background-3.png";
     private static final String CONTROLLERS_BACKGROUND_PATH = "background-all.png";
@@ -64,7 +65,7 @@ public class NewGameScreen extends AbstractScreen implements World.WorldListener
         touchPoint = new Vector3();
         mBatch = new SpriteBatch();
 
-        mWorld = new World( NewGameScreen.this /* World listener */);
+        mWorld = new World( NewGameScreen.this /* World listener */, getGame() );
         mRenderer = new WorldRenderer( mBatch, mWorld, getGame() );
 
         /* we setup the end bounds */
@@ -109,6 +110,16 @@ public class NewGameScreen extends AbstractScreen implements World.WorldListener
     @Override
     public void hit() {
         // TODO play hit sound
+    }
+
+    @Override
+    public void powerUpClick(PowerUp.Type type) {
+        mWorld.triggerPowerUp( type );
+    }
+
+    @Override
+    public void shieldClick() {
+        mWorld.triggerShield();
     }
 
     public void update( float deltaTime, InputHandler.InputValues values ){
@@ -183,19 +194,9 @@ public class NewGameScreen extends AbstractScreen implements World.WorldListener
     }
 
     private void presentReady(){
-        TextureAtlas atlas = getGame().getAssetManager().get("StayingAlive.atlas", TextureAtlas.class );
-
-        // We draw the ready image
-        mBatch.draw(
-                atlas.findRegion("DudeStanding"),
-                (ViewPortConstants.VIEWPORT_WIDTH / 2) - 100 /* x-position */,
-                ViewPortConstants.VIEWPORT_HEIGHT / 2/* y-position */,
-                200 /* width */,
-                300 /* height*/
-        );
         //We draw the get ready message
         messagesFont.draw( mBatch, "GET READY!", ViewPortConstants.VIEWPORT_WIDTH / 2 - 325,
-                ViewPortConstants.VIEWPORT_HEIGHT / 2);
+                (ViewPortConstants.VIEWPORT_HEIGHT / 2) + 500 );
 
     }
 
@@ -280,23 +281,16 @@ public class NewGameScreen extends AbstractScreen implements World.WorldListener
                 210 /* rotation */, true /* isClockwise */
         );
 
-        scoreFont.draw(mBatch, scoreString, 16, ViewPortConstants.VIEWPORT_HEIGHT - 20);
+        scoreFont.draw(mBatch, scoreString,
+                (ViewPortConstants.VIEWPORT_WIDTH / 2) - 80,
+                ViewPortConstants.VIEWPORT_HEIGHT - 20);
     }
 
     private void presentGameOver(){
-        // We draw the ready image
-        mBatch.draw(
-                getGame().getAssetManager().get("StayingAlive.atlas", TextureAtlas.class).findRegion("DudeStanding"),
-                (ViewPortConstants.VIEWPORT_WIDTH / 2) - 100 /* x-position */,
-                ViewPortConstants.VIEWPORT_HEIGHT / 2/* y-position */,
-                200 /* width */,
-                300 /* height*/
-        );
-        //We draw the
         messagesFont.draw( mBatch, "GAME OVER", ViewPortConstants.VIEWPORT_WIDTH / 2 - 360,
-                ViewPortConstants.VIEWPORT_HEIGHT / 2);
-        timeFont.draw( mBatch, "TIME: " + time, ViewPortConstants.VIEWPORT_WIDTH / 2 - 100,
-                (ViewPortConstants.VIEWPORT_HEIGHT / 2) - 125);
+                (ViewPortConstants.VIEWPORT_HEIGHT / 2) + 350 );
+        timeFont.draw( mBatch, "TIME: " + time, ViewPortConstants.VIEWPORT_WIDTH / 2 - 150,
+                (ViewPortConstants.VIEWPORT_HEIGHT / 2) + 200);
     }
 
     /**
@@ -308,8 +302,6 @@ public class NewGameScreen extends AbstractScreen implements World.WorldListener
 
         Table gameTable = new Table();
 
-        // Image gameBackground = new Image( getGame().getAssetManager().get("StayingAlive.atlas", TextureAtlas.class).findRegion("Cannon") );
-        // gameTable.setBackground( gameBackground.getDrawable() );
         table.add( gameTable ).size( ViewPortConstants.VIEWPORT_WIDTH, ViewPortConstants.GAME_CONTAINER_HEIGHT).top();
         table.row();
 
@@ -329,8 +321,9 @@ public class NewGameScreen extends AbstractScreen implements World.WorldListener
         initializeGameBackground();
 
          /* initialize the game */
-        mInputHandler = new InputHandler( getStage() );
+        mInputHandler = new InputHandler( getStage(), getGame(), NewGameScreen.this /* callbacks */ );
         mInputHandler.show();
+        mWorld.setInputHandler( mInputHandler );
     }
 
     @Override
@@ -348,5 +341,4 @@ public class NewGameScreen extends AbstractScreen implements World.WorldListener
             state = GAME_OVER;
         }
     }
-
 }

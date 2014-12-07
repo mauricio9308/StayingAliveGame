@@ -70,7 +70,7 @@ public class HighScoresScreen extends AbstractScreen{
         }else{
             for( HighScore highScore : HIGHSCORES ) {
                 // TODO create parser
-                Label highScoreLabel = new Label(highScore.getName() + ": " + highScore.getTimeInMillis(), highStyle);
+                Label highScoreLabel = new Label(Double.toString( highScore.getTimeInMillis() ), highStyle);
                 table.add(highScoreLabel).center().colspan(3).padTop(40);
                 table.row();
             }

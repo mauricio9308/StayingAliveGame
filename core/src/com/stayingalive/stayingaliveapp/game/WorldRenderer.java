@@ -37,6 +37,8 @@ public class WorldRenderer {
         mBatch.enableBlending();
         mBatch.begin();
         renderDude();
+        renderCannonBalls();
+        renderPowerUps();
         mBatch.end();
     }
 
@@ -55,8 +57,35 @@ public class WorldRenderer {
                 keyFrame = mGame.getAssetManager().get("StayingAlive.atlas", TextureAtlas.class ).findRegion("DudeStanding");
             break;
         }
-
         mBatch.draw( keyFrame, mWorld.mDude.mPosition.x, mWorld.mDude.mPosition.y);
+    }
+
+    private void renderCannonBalls(){
+        for( Cannonball cannonball : mWorld.mCannonballs ){
+            TextureRegion keyFrame = mGame.getAssetManager().get("StayingAlive.atlas", TextureAtlas.class).findRegion("Cannonball");
+            mBatch.draw( keyFrame, cannonball.mPosition.x, cannonball.mPosition.y );
+        }
+    }
+
+    private void renderPowerUps(){
+        for( PowerUp powerUp : mWorld.mPowerUps ){
+            TextureRegion keyFrame;
+            TextureAtlas atlas = mGame.getAssetManager().get("StayingAlive.atlas", TextureAtlas.class);
+            switch( powerUp.getPowerUpKind() ){
+                case POWER_UP_BLOW_EM_ALL:
+                    keyFrame = atlas.findRegion("PowerUp-Bomb");
+                    break;
+                case POWER_UP_SHIELD:
+                    keyFrame = atlas.findRegion("PowerUp-Shield");
+                    break;
+                case POWER_UP_SLOW_MO:
+                    keyFrame = atlas.findRegion("PowerUp-SlowDown");
+                    break;
+                default:
+                    throw new IllegalArgumentException("Invalid power up type");
+            }
+            mBatch.draw( keyFrame, powerUp.mPosition.x, powerUp.mPosition.y );
+        }
     }
 
 }
