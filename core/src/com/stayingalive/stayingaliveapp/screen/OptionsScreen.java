@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -48,7 +49,7 @@ public class OptionsScreen extends AbstractScreen {
         table.left().top();
 
 
-        final CheckBox musicCheckbox = new CheckBox("Music", getSkin());
+        final CheckBox musicCheckbox = new CheckBox("", new Skin(Gdx.files.internal("uiskin/uiskin.json"), new TextureAtlas("uiskin/uiskin.atlas")));
         musicCheckbox.setChecked( mPreferencesManager.isMusicEnabled() );
         musicCheckbox.addListener(new ChangeListener() {
             @Override
@@ -64,7 +65,7 @@ public class OptionsScreen extends AbstractScreen {
             }
         });
 
-        final CheckBox soundCheckbox = new CheckBox("Sounds", getSkin());
+        final CheckBox soundCheckbox = new CheckBox("", new Skin(Gdx.files.internal("uiskin/uiskin.json"), new TextureAtlas("uiskin/uiskin.atlas")));
         soundCheckbox.setChecked( mPreferencesManager.isSoundEnabled());
         soundCheckbox.addListener(new ChangeListener() {
             @Override
@@ -95,27 +96,35 @@ public class OptionsScreen extends AbstractScreen {
         });
 
         //first row
-        table.add( backButton ).left().padBottom(100).expandX();
+        table.add( backButton ).left().padBottom(100).expandX().colspan(2);
         table.row();
 
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator( Gdx.files.internal("fonts/Prisma.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = 120;
         BitmapFont titleFont = generator.generateFont(parameter);
-
         Label.LabelStyle style = new Label.LabelStyle( titleFont, Color.WHITE );
+
+        FreeTypeFontGenerator.FreeTypeFontParameter optionTextParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        optionTextParameter.size = 80;
+        BitmapFont optionFont = generator.generateFont(optionTextParameter);
+        Label.LabelStyle optionStyle = new Label.LabelStyle( optionFont, Color.WHITE );
 
         //second row
         Label label = new Label("Options", style);
-        table.add(label).padBottom(100);
+        table.add(label).padBottom(70).colspan(2);
 
         //third row
         table.row();
-        table.add(soundCheckbox).colspan(3).padBottom(100);
+        table.add(musicCheckbox).pad(30);
+        Label musicLabel = new Label("Music", optionStyle);
+        table.add(musicLabel).left();
 
         //fourth row
         table.row();
-        table.add(musicCheckbox).colspan(3).padBottom(100);
+        table.add(soundCheckbox).pad(30);
+        Label soundLabel = new Label("Sound", optionStyle);
+        table.add(soundLabel).left();
     }
 
 }

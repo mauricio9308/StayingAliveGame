@@ -5,64 +5,64 @@ filter: Nearest,Nearest
 repeat: none
 ControllerBG
   rotate: false
-  xy: 1, 170
+  xy: 1, 113
   size: 768, 341
   orig: 768, 341
   offset: 0, 0
   index: -1
 BackArrow
   rotate: false
-  xy: 1, 58
+  xy: 1, 1
   size: 110, 110
   orig: 110, 110
   offset: 0, 0
   index: -1
 Button-PowerUp-Bomb - Copy
   rotate: false
-  xy: 771, 401
+  xy: 771, 344
   size: 110, 110
   orig: 110, 110
   offset: 0, 0
   index: -1
 Button-PowerUp-Empty
   rotate: false
-  xy: 113, 58
+  xy: 113, 1
   size: 110, 110
   orig: 110, 110
   offset: 0, 0
   index: -1
 Button-PowerUp-Shield - Copy
   rotate: false
-  xy: 771, 289
+  xy: 771, 232
   size: 110, 110
   orig: 110, 110
   offset: 0, 0
   index: -1
 Button-PowerUp-SlowDown
   rotate: false
-  xy: 883, 401
+  xy: 883, 344
   size: 110, 110
   orig: 110, 110
   offset: 0, 0
   index: -1
 Button-Shield
   rotate: false
-  xy: 225, 58
+  xy: 225, 1
   size: 110, 110
   orig: 110, 110
   offset: 0, 0
   index: -1
 checkbox-checked
   rotate: false
-  xy: 1, 1
-  size: 55, 55
-  orig: 55, 55
+  xy: 771, 120
+  size: 110, 110
+  orig: 110, 110
   offset: 0, 0
   index: -1
 checkbox-unchecked
   rotate: false
-  xy: 58, 1
-  size: 55, 55
-  orig: 55, 55
+  xy: 883, 232
+  size: 110, 110
+  orig: 110, 110
   offset: 0, 0
   index: -1
