@@ -1,5 +1,8 @@
 package com.stayingalive.stayingaliveapp.game;
 
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.stayingalive.stayingaliveapp.StayingAliveGame;
 import com.stayingalive.stayingaliveapp.screen.ViewPortConstants;
 
 /**
@@ -12,19 +15,28 @@ public class Dude extends DynamicGameObject{
     public static final int DUDE_STATE_FALL = 2;
     public static final int DUDE_STATE_HIT = 3;
 
-    public static final float DUDE_WIDTH = 160;
-    public static final float DUDE_HEIGHT = 218;
+    public static final float DUDE_WIDTH = 190;
+    public static final float DUDE_HEIGHT = 480;
 
     public static final float DUDE_JUMP_VELOCITY = 15;
     public static final float DUDE_MOVE_VELOCITY = 10;
 
+    private int[] BOUNDS_JUMPING;
+    private int[] BOUNDS_DUCKING;
+    private int[] BOUNDS_STANDING;
+
+    private StayingAliveGame mGame;
+
     public int state;
     public float stateTime;
 
-    public Dude( float x, float y ){
-        super( x,y, DUDE_WIDTH, DUDE_HEIGHT );
+    public Dude( float x, float y, StayingAliveGame game ){
+        super( x, y, DUDE_WIDTH, DUDE_HEIGHT );
         state = DUDE_STATE_NORMAL;
         stateTime = 0;
+        mGame = game;
+
+        initializeBounds();
     }
 
     public void update( float deltaTime ){
@@ -41,7 +53,7 @@ public class Dude extends DynamicGameObject{
 
         if( state == DUDE_STATE_JUMP ){
             mPosition.y += DUDE_JUMP_VELOCITY;
-            if( stateTime >= 20 || mVelocity.y < 0 /* 10 cycles is the time of the jump */ ){
+            if( stateTime >= 20 || mVelocity.y < 0 /* 20 cycles is the time of the jump */ ){
                 fall();
             }
         }
@@ -62,10 +74,49 @@ public class Dude extends DynamicGameObject{
             mPosition.x += mVelocity.x;
         }
 
-        mBounds.x = mPosition.x - ( mBounds.width / 2);
-        mBounds.y = mPosition.y - ( mBounds.height / 2);
+        updateBounds();
 
         stateTime ++;
+    }
+
+    private void initializeBounds(){
+        TextureAtlas atlas = mGame.getAssetManager().get("StayingAlive.atlas", TextureAtlas.class );
+
+        TextureRegion jump = atlas.findRegion("DudeJumping");
+        BOUNDS_JUMPING = new int[]{ jump.getRegionWidth(), jump.getRegionHeight() };
+
+        TextureRegion fall = atlas.findRegion("DudeDucking");
+        BOUNDS_DUCKING = new int[]{ fall.getRegionWidth(), fall.getRegionHeight() };
+
+        TextureRegion normal = atlas.findRegion("DudeStanding");
+        BOUNDS_STANDING = new int[]{ normal.getRegionWidth(), normal.getRegionHeight() };
+    }
+
+    private void updateBounds(){
+        int width;
+        int height;
+
+        switch( state ){
+            case Dude.DUDE_STATE_JUMP:
+                width = BOUNDS_JUMPING[0];
+                height = BOUNDS_JUMPING[1];
+                break;
+            case Dude.DUDE_STATE_FALL:
+                width = BOUNDS_DUCKING[0];
+                height = BOUNDS_DUCKING[1];
+                break;
+            case Dude.DUDE_STATE_NORMAL:
+            case Dude.DUDE_STATE_HIT:
+            default:
+                width = BOUNDS_STANDING[0];
+                height = BOUNDS_STANDING[1];
+                break;
+        }
+
+        mBounds.width = width - 50;
+        mBounds.height = height - 50;
+        mBounds.x = mPosition.x - 35;
+        mBounds.y = mPosition.y - 35;
     }
 
     public void jump(){

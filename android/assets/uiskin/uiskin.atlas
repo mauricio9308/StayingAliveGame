@@ -17,7 +17,7 @@ BackArrow
   orig: 110, 110
   offset: 0, 0
   index: -1
-Button-PowerUp-Bomb - Copy
+Button-PowerUp-Bomb
   rotate: false
   xy: 771, 344
   size: 110, 110
@@ -31,7 +31,7 @@ Button-PowerUp-Empty
   orig: 110, 110
   offset: 0, 0
   index: -1
-Button-PowerUp-Shield - Copy
+Button-PowerUp-Shield
   rotate: false
   xy: 771, 232
   size: 110, 110

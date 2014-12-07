@@ -30,7 +30,7 @@ public class MainScreen extends AbstractScreen{
         super.show();
 
         final Table table = getTable();
-        setBackground("background-3.png");
+        setBackground("background-all.png");
         playMusic();
 
 
