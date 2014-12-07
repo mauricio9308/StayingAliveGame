@@ -50,7 +50,7 @@ public class HighScoresManager {
         if( previousHighScores == null || previousHighScores.length == 0 ){
             newHighScores = new HighScore[1];
             newHighScores[0] = highscore;
-        }else{
+        } else {
             /* we verify is the high score is better than the actual ones */
             ArrayList<HighScore> highScores =
                     new ArrayList<HighScore>( Arrays.asList( previousHighScores ));
@@ -64,15 +64,16 @@ public class HighScoresManager {
             }
 
             /* if the high scores arrays contains more than the total admitted */
+
             if( highScores.size() > TOTAL_OF_HIGHSCORES ){
                 newHighScores = new HighScore[TOTAL_OF_HIGHSCORES];
                 for( int i = 0; i < TOTAL_OF_HIGHSCORES; i ++ ){
                     newHighScores[i] = highScores.get(i);
                 }
+            } else {
+                newHighScores = highScores.toArray(new HighScore[ highScores.size() ]);
             }
 
-            newHighScores = new HighScore[ highScores.size() ];
-            highScores.toArray( newHighScores  );
         }
 
         /* convert highscores array to json*/
