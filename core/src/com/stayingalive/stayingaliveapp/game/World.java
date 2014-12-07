@@ -14,12 +14,12 @@ import java.util.Random;
  * */
 public class World {
 
-    private static final int TIME_BARRIER_1 = 1000;
-    private static final int TIME_BARRIER_2 = 3000;
-    private static final int TIME_BARRIER_3 = 9000;
-    private static final int TIME_BARRIER_4 = 20000;
+    private static final int SCORE_BARRIER_1 = 1000;
+    private static final int SCORE_BARRIER_2 = 3000;
+    private static final int SCORE_BARRIER_3 = 9000;
+    private static final int SCORE_BARRIER_4 = 20000;
 
-    private static final int SHIELD_BASE_TIME = 100;
+    private static final int SHIELD_BASE_TIME = 300;
 
     public static interface WorldListener{
         public void jump();
@@ -70,6 +70,17 @@ public class World {
         checkPowerUpsCollisions();
         throwBullet();
         timeSoFar++;
+
+        if( isShieldActive && shieldTime > 0 ){
+            shieldTime--;
+        }
+
+        double shieldValue = (shieldTime * 10) / SHIELD_BASE_TIME;
+        inputHandler.setProgressShieldValue( shieldValue );
+
+        if( shieldTime == 0 ){
+            isShieldActive = false;
+        }
     }
 
     public void updateDude( float deltaTime, InputHandler.InputValues values ){
@@ -99,9 +110,14 @@ public class World {
 
         for( Cannonball cannonball : mCannonballs ){
             if( mDude.mBounds.overlaps( cannonball.mBounds )){
-                mDude.state = Dude.DUDE_STATE_HIT;
-                state = WORLD_STATE_GAME_OVER;
-                return;
+                if( isShieldActive ){
+                    mCannonballs.remove( cannonball );
+                    break;
+                }else{
+                    mDude.state = Dude.DUDE_STATE_HIT;
+                    state = WORLD_STATE_GAME_OVER;
+                    return;
+                }
             }
         }
     }
@@ -120,7 +136,9 @@ public class World {
     }
 
     public void triggerShield(){
-        isShieldActive = true;
+        if( shieldTime > 0 ){
+            isShieldActive = true;
+        }
     }
 
     public void deactivateShield(){
@@ -138,7 +156,7 @@ public class World {
                 triggerSlowMo();
                 break;
             case POWER_UP_SHIELD:
-                triggerShield();
+                triggerShieldPower();
                 break;
             case POWER_UP_BLOW_EM_ALL:
                 triggerBlowEmAll();
@@ -159,15 +177,20 @@ public class World {
         mPowerUps = new ArrayList<PowerUp>();
     }
 
+    private void triggerShieldPower(){
+        shieldTime = SHIELD_BASE_TIME;
+        inputHandler.setProgressShieldValue( 10 );
+    }
+
 
     private void throwBullet(){
-        if( timeSoFar > 0 && timeSoFar < TIME_BARRIER_1 ){
+        if( timeSoFar > 0 && timeSoFar < SCORE_BARRIER_1){
             throwInitialBullet();
-        }else if ( timeSoFar >= TIME_BARRIER_1 && timeSoFar < TIME_BARRIER_2 ){
+        }else if ( timeSoFar >= SCORE_BARRIER_1 && timeSoFar < SCORE_BARRIER_2){
             throwBarrier1Bullet();
-        }else if( timeSoFar >= TIME_BARRIER_2 && timeSoFar < TIME_BARRIER_3 ){
+        }else if( timeSoFar >= SCORE_BARRIER_2 && timeSoFar < SCORE_BARRIER_3){
             throwBarrier2Bullet();
-        }else if( timeSoFar >= TIME_BARRIER_3 && timeSoFar < TIME_BARRIER_4 ){
+        }else if( timeSoFar >= SCORE_BARRIER_3 && timeSoFar < SCORE_BARRIER_4){
             throwBarrier3Bullet();
         }else {
             throwBarrier4Bullet();

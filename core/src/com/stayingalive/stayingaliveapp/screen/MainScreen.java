@@ -57,7 +57,7 @@ public class MainScreen extends AbstractScreen{
                 /* Send to options screen*/
                 final StayingAliveGame game = getGame();
 
-                game.setScreen( new NewGameScreen(getGame() ));
+                game.setScreen( new GameScreen(getGame() ));
                 //game.getSoundManager().play(StayingAliveSound.CLICK);
             }
         });

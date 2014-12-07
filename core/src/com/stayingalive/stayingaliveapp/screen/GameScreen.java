@@ -24,7 +24,7 @@ import com.stayingalive.stayingaliveapp.services.HighScoresManager;
 /**
  * Created by mauriciolara on 11/29/14.
  */
-public class NewGameScreen extends AbstractScreen implements World.WorldListener, InputHandler.Callbacks {
+public class GameScreen extends AbstractScreen implements World.WorldListener, InputHandler.Callbacks {
 
     private static final String GAME_BACKGROUND_PATH = "background-3.png";
     private static final String CONTROLLERS_BACKGROUND_PATH = "background-all.png";
@@ -49,7 +49,7 @@ public class NewGameScreen extends AbstractScreen implements World.WorldListener
     public BitmapFont messagesFont;
     public BitmapFont timeFont;
 
-    public NewGameScreen(StayingAliveGame game) {
+    public GameScreen(StayingAliveGame game) {
         super(game);
 
         state = GAME_READY;
@@ -62,7 +62,7 @@ public class NewGameScreen extends AbstractScreen implements World.WorldListener
         touchPoint = new Vector3();
         mBatch = new SpriteBatch();
 
-        mWorld = new World( NewGameScreen.this /* World listener */, getGame() );
+        mWorld = new World( GameScreen.this /* World listener */, getGame() );
         mRenderer = new WorldRenderer( mBatch, mWorld, getGame() );
 
         /* we setup the end bounds */
@@ -112,8 +112,13 @@ public class NewGameScreen extends AbstractScreen implements World.WorldListener
     }
 
     @Override
-    public void shieldClick() {
+    public void shieldTouchDown() {
         mWorld.triggerShield();
+    }
+
+    @Override
+    public void shieldTouchUp() {
+        mWorld.deactivateShield();
     }
 
     public void update( float deltaTime, InputHandler.InputValues values ){
@@ -315,9 +320,9 @@ public class NewGameScreen extends AbstractScreen implements World.WorldListener
         initializeGameBackground();
 
          /* initialize the game */
-        mInputHandler = new InputHandler( getStage(), getGame(), NewGameScreen.this /* callbacks */ );
+        mInputHandler = new InputHandler( getStage(), getGame(), GameScreen.this /* callbacks */ );
         mInputHandler.show();
-        mWorld.setInputHandler( mInputHandler );
+        mWorld.setInputHandler(mInputHandler);
     }
 
     @Override
