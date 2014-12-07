@@ -62,7 +62,7 @@ public class WorldRenderer {
             break;
         }
 
-        boolean isFlipped = (dude.mVelocity.x < 0);
+        boolean isFlipped = (dude.facing == Dude.DUDE_FACING_LEFT);
 
         mBatch.draw( keyFrame.getTexture(),
                 dude.mPosition.x  /* x-position */,

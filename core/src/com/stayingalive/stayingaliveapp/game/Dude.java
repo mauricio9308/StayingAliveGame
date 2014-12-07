@@ -15,11 +15,15 @@ public class Dude extends DynamicGameObject{
     public static final int DUDE_STATE_FALL = 2;
     public static final int DUDE_STATE_HIT = 3;
 
+
     public static final float DUDE_WIDTH = 190;
     public static final float DUDE_HEIGHT = 480;
 
     public static final float DUDE_JUMP_VELOCITY = 15;
     public static final float DUDE_MOVE_VELOCITY = 10;
+
+    public static final int DUDE_FACING_RIGHT = 1;
+    public static final int DUDE_FACING_LEFT = -1;
 
     private int[] BOUNDS_JUMPING;
     private int[] BOUNDS_DUCKING;
@@ -29,6 +33,9 @@ public class Dude extends DynamicGameObject{
 
     public int state;
     public float stateTime;
+
+
+    public int facing = DUDE_FACING_RIGHT;
 
     public Dude( float x, float y, StayingAliveGame game ){
         super( x, y, DUDE_WIDTH, DUDE_HEIGHT );
@@ -75,6 +82,13 @@ public class Dude extends DynamicGameObject{
         }
 
         updateBounds();
+
+
+        if( mVelocity.x > 0 ){
+            facing = DUDE_FACING_RIGHT;
+        }else if( mVelocity.y < 0 ){
+            facing = DUDE_FACING_LEFT;
+        }
 
         stateTime ++;
     }

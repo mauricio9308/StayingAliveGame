@@ -1,5 +1,7 @@
 package com.stayingalive.stayingaliveapp.game;
 
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.stayingalive.stayingaliveapp.StayingAliveGame;
 import com.stayingalive.stayingaliveapp.screen.ViewPortConstants;
@@ -111,7 +113,24 @@ public class World {
         for( Cannonball cannonball : mCannonballs ){
             if( mDude.mBounds.overlaps( cannonball.mBounds )){
                 if( isShieldActive ){
-                    mCannonballs.remove( cannonball );
+
+                    Rectangle intersection = new Rectangle();
+                    Intersector.intersectRectangles( cannonball.mBounds, mDude.mBounds, intersection );
+                    if(intersection.x > mDude.mBounds.x && mDude.facing == Dude.DUDE_FACING_RIGHT){
+                        //Intersects with right side
+                        mCannonballs.remove( cannonball );
+                    }
+                    if(intersection.y > mDude.mBounds.y){
+                        //Intersects with top side
+                    }
+                    if((intersection.x + intersection.width < mDude.mBounds.x + mDude.mBounds.width)
+                            && mDude.facing == Dude.DUDE_FACING_LEFT ){
+                        //Intersects with left side
+                        mCannonballs.remove( cannonball );
+                    }
+                    if(intersection.y + intersection.height < mDude.mBounds.y + mDude.mBounds.height){
+                        //Intersects with bottom side
+                    }
                     break;
                 }else{
                     mDude.state = Dude.DUDE_STATE_HIT;
