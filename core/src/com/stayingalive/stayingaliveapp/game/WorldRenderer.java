@@ -43,20 +43,22 @@ public class WorldRenderer {
     }
 
     private void renderDude(){
+
+        TextureAtlas atlas = mGame.getAssetManager().get("StayingAlive.atlas", TextureAtlas.class );
         TextureRegion keyFrame;
         final Dude dude = mWorld.mDude;
 
         switch ( dude.state ){
             case Dude.DUDE_STATE_JUMP:
-                keyFrame = mGame.getAssetManager().get("StayingAlive.atlas", TextureAtlas.class ).findRegion("DudeJumping");
+                keyFrame = atlas.findRegion("DudeJumping");
                 break;
             case Dude.DUDE_STATE_FALL:
-                keyFrame = mGame.getAssetManager().get("StayingAlive.atlas", TextureAtlas.class ).findRegion("DudeDucking");
+                keyFrame = atlas.findRegion("DudeDucking");
                 break;
             case Dude.DUDE_STATE_NORMAL:
             case Dude.DUDE_STATE_HIT:
             default:
-                keyFrame = mGame.getAssetManager().get("StayingAlive.atlas", TextureAtlas.class ).findRegion("DudeStanding");
+                keyFrame = atlas.findRegion("DudeStanding");
             break;
         }
 
@@ -74,12 +76,40 @@ public class WorldRenderer {
                 isFlipped /* flipX */, false /* flipY */
         );
 
+
+        /* render the shield if active */
+        if( mWorld.isShieldActive ){
+            TextureRegion shield = atlas.findRegion("Shield");
+
+            float shieldX = 0;
+            float shieldY = 0;
+
+            if( isFlipped ){
+                shieldX = dude.mPosition.x;
+            }else{
+                shieldX = dude.mPosition.x + dude.mBounds.width ;
+            }
+
+            shieldY = dude.mPosition.y;
+
+            mBatch.draw( shield.getTexture(),
+                    shieldX  /* x-position */,
+                    shieldY /* y-position */,
+                    0 /* originX */,
+                    0 /* originY */,
+                    shield.getRegionWidth() /* width */, shield.getRegionHeight() /* height */,
+                    1 /* scaleX */, 1 /* scaleY */,
+                    0 /* rotation */, shield.getRegionX() /* srcX */, shield.getRegionY()/* srcY */,
+                    shield.getRegionWidth() /* srcWidth */, shield.getRegionHeight() /* srcHeight */,
+                    isFlipped /* flipX */, false /* flipY */
+            );
+        }
     }
 
 
     private void renderCannonBalls(){
+        TextureRegion keyFrame = mGame.getAssetManager().get("StayingAlive.atlas", TextureAtlas.class).findRegion("Cannonball");
         for( Cannonball cannonball : mWorld.mCannonballs ){
-            TextureRegion keyFrame = mGame.getAssetManager().get("StayingAlive.atlas", TextureAtlas.class).findRegion("Cannonball");
             mBatch.draw( keyFrame, cannonball.mPosition.x, cannonball.mPosition.y );
         }
     }

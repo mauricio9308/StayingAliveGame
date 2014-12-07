@@ -30,10 +30,10 @@ public abstract class AbstractScreen implements Screen{
     }
 
     public String getName(){
-        return getClass().getSimpleName();
+        return "";
     }
 
-    protected Skin getSkin(){
+    public Skin getSkin(){
         if( mSkin == null ){
             mSkin = new Skin(Gdx.files.internal("uiskin.json"), new TextureAtlas("uiskin.atlas"));
         }

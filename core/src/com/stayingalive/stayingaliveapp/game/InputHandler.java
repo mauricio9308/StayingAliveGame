@@ -5,15 +5,19 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.stayingalive.stayingaliveapp.StayingAliveGame;
+import com.stayingalive.stayingaliveapp.screen.GameScreen;
+import com.stayingalive.stayingaliveapp.screen.MainScreen;
 import com.stayingalive.stayingaliveapp.screen.ViewPortConstants;
 
 /**
@@ -32,7 +36,8 @@ public class InputHandler {
 
     public static interface Callbacks{
         public void powerUpClick( PowerUp.Type type );
-        public void shieldClick();
+        public void shieldTouchDown();
+        public void shieldTouchUp();
     }
 
     private StayingAliveGame mGame;
@@ -67,8 +72,8 @@ public class InputHandler {
     }
 
 
-    public void setProgressShieldValue( float value ){
-        mShieldBar.setValue( value );
+    public void setProgressShieldValue( double value ){
+        mShieldBar.setValue( (float) value );
     }
 
     private void initializeShieldBar(){
@@ -89,7 +94,7 @@ public class InputHandler {
                 progressBarSkin.newDrawable("knob", Color.RED) );
 
         barStyle.knobBefore = barStyle.knob;
-        mShieldBar = new ProgressBar(0, 10, 0.5f, false, barStyle);
+        mShieldBar = new ProgressBar(0, 10, 0.1f, false, barStyle);
         mShieldBar.setBounds(
                 200/* x-position */,
                 200 /* y-position */,
@@ -97,8 +102,7 @@ public class InputHandler {
                 250 /* height */);
         mStage.addActor( mShieldBar );
 
-        mShieldBar.setValue( 10 );
-        mShieldBar.setAnimateDuration(1);
+        mShieldBar.setValue(10);
     }
 
     private void initializeTouchpad(){
@@ -201,14 +205,37 @@ public class InputHandler {
                 170 /* y-position */,
                 110 /* width */,
                 110 /* height */);
-        mShieldButton.addListener( new ClickListener(){
-           @Override
-           public void clicked( InputEvent event, float x, float y ){
-               mCallbacks.shieldClick();
-           }
+        mShieldButton.addListener(new InputListener() {
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                mCallbacks.shieldTouchDown();
+                return true;
+            }
+
+            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                mCallbacks.shieldTouchUp();
+            }
         });
 
         mStage.addActor( mShieldButton );
+
+
+        final GameScreen gameScreen = (GameScreen) mGame.getScreen();
+        TextButton bttnExtiGame = new TextButton("Exit", gameScreen.getSkin() );
+        bttnExtiGame.setBounds(
+                (ViewPortConstants.VIEWPORT_WIDTH / 2) - 50 /* x-position */,
+                20/* y-position */,
+                100 /* width */,
+                50 /* height */);
+
+        bttnExtiGame.addListener( new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y ){
+                /* Send to options screen*/
+                mGame.setScreen( new MainScreen( mGame ));
+            }
+        });
+
+        mStage.addActor( bttnExtiGame );
     }
 
     /**
