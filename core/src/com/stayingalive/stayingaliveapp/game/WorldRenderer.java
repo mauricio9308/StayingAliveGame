@@ -44,7 +44,9 @@ public class WorldRenderer {
 
     private void renderDude(){
         TextureRegion keyFrame;
-        switch ( mWorld.mDude.state ){
+        final Dude dude = mWorld.mDude;
+
+        switch ( dude.state ){
             case Dude.DUDE_STATE_JUMP:
                 keyFrame = mGame.getAssetManager().get("StayingAlive.atlas", TextureAtlas.class ).findRegion("DudeJumping");
                 break;
@@ -57,8 +59,23 @@ public class WorldRenderer {
                 keyFrame = mGame.getAssetManager().get("StayingAlive.atlas", TextureAtlas.class ).findRegion("DudeStanding");
             break;
         }
-        mBatch.draw( keyFrame, mWorld.mDude.mPosition.x, mWorld.mDude.mPosition.y);
+
+        boolean isFlipped = (dude.mVelocity.x < 0);
+
+        mBatch.draw( keyFrame.getTexture(),
+                dude.mPosition.x  /* x-position */,
+                dude.mPosition.y/* y-position */,
+                0 /* originX */,
+                0 /* originY */,
+                keyFrame.getRegionWidth() /* width */, keyFrame.getRegionHeight() /* height */,
+                1 /* scaleX */, 1 /* scaleY */,
+                0 /* rotation */, keyFrame.getRegionX() /* srcX */, keyFrame.getRegionY()/* srcY */,
+                keyFrame.getRegionWidth() /* srcWidth */, keyFrame.getRegionHeight() /* srcHeight */,
+                isFlipped /* flipX */, false /* flipY */
+        );
+
     }
+
 
     private void renderCannonBalls(){
         for( Cannonball cannonball : mWorld.mCannonballs ){
@@ -84,6 +101,7 @@ public class WorldRenderer {
                 default:
                     throw new IllegalArgumentException("Invalid power up type");
             }
+
             mBatch.draw( keyFrame, powerUp.mPosition.x, powerUp.mPosition.y );
         }
     }

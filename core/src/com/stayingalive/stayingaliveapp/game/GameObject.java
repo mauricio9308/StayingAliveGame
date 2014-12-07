@@ -15,7 +15,6 @@ public class GameObject {
 
     public GameObject( float x, float y, float width, float height ){
         mPosition = new Vector2( x, y );
-
         mBounds = new Rectangle( x - ( width / 2 ), y - ( height / 2 ), width, height );
     }
 }

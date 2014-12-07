@@ -113,10 +113,10 @@ public class Dude extends DynamicGameObject{
                 break;
         }
 
-        mBounds.width = width;
-        mBounds.height = height;
-        mBounds.x = mPosition.x - ( width / 2);
-        mBounds.y = mPosition.y - ( height / 2);
+        mBounds.width = width - 50;
+        mBounds.height = height - 50;
+        mBounds.x = mPosition.x - 35;
+        mBounds.y = mPosition.y - 35;
     }
 
     public void jump(){

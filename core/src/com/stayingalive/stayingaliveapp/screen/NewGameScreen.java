@@ -49,9 +49,6 @@ public class NewGameScreen extends AbstractScreen implements World.WorldListener
     public BitmapFont messagesFont;
     public BitmapFont timeFont;
 
-    private final int VIEW_HEIGHT;
-    private final int VIEW_WIDTH;
-
     public NewGameScreen(StayingAliveGame game) {
         super(game);
 
@@ -94,9 +91,6 @@ public class NewGameScreen extends AbstractScreen implements World.WorldListener
         timeFontParams.size = 50;
         timeFont = generator.generateFont( timeFontParams );
         timeFont.setColor( Color.BLACK );
-
-        VIEW_HEIGHT = Gdx.graphics.getHeight();
-        VIEW_WIDTH = Gdx.graphics.getWidth();
 
         time = 0;
         scoreString = "TIME: 0";

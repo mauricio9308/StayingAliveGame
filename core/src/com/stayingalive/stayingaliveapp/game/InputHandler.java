@@ -66,6 +66,11 @@ public class InputHandler {
         initializeButtonsStyles(game);
     }
 
+
+    public void setProgressShieldValue( float value ){
+        mShieldBar.setValue( value );
+    }
+
     private void initializeShieldBar(){
         Skin progressBarSkin = new Skin();
         Pixmap background = new Pixmap(10, 10, Pixmap.Format.RGBA8888);
@@ -84,16 +89,16 @@ public class InputHandler {
                 progressBarSkin.newDrawable("knob", Color.RED) );
 
         barStyle.knobBefore = barStyle.knob;
-        ProgressBar bar = new ProgressBar(0, 10, 0.5f, false, barStyle);
-        bar.setAnimateDuration(2);
-        bar.setBounds(
+        mShieldBar = new ProgressBar(0, 10, 0.5f, false, barStyle);
+        mShieldBar.setBounds(
                 200/* x-position */,
                 200 /* y-position */,
                 ViewPortConstants.VIEWPORT_WIDTH / 2 /* width */,
                 250 /* height */);
-        mStage.addActor( bar );
+        mStage.addActor( mShieldBar );
 
-        bar.setValue( 8 );
+        mShieldBar.setValue( 10 );
+        mShieldBar.setAnimateDuration(1);
     }
 
     private void initializeTouchpad(){

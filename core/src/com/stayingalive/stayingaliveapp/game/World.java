@@ -14,10 +14,12 @@ import java.util.Random;
  * */
 public class World {
 
-    private static final int TIME_BARRIER_1 = 10000;
-    private static final int TIME_BARRIER_2 = 30000;
-    private static final int TIME_BARRIER_3 = 90000;
-    private static final int TIME_BARRIER_4 = 200000;
+    private static final int TIME_BARRIER_1 = 1000;
+    private static final int TIME_BARRIER_2 = 3000;
+    private static final int TIME_BARRIER_3 = 9000;
+    private static final int TIME_BARRIER_4 = 20000;
+
+    private static final int SHIELD_BASE_TIME = 100;
 
     public static interface WorldListener{
         public void jump();
@@ -25,9 +27,7 @@ public class World {
     }
 
     public static final float WORLD_WIDTH = ViewPortConstants.VIEWPORT_WIDTH;
-    public static final float WORLD_HEIGHT = ViewPortConstants.GAME_CONTAINER_HEIGHT;
 
-    public static final int WORLD_STATE_RUNNING = 1;
     public static final int WORLD_STATE_GAME_OVER = 2;
 
     public static final Vector2 mGravity = new Vector2( 0, -500 );
@@ -41,9 +41,11 @@ public class World {
 
     public final Random mRandom;
 
+    public boolean isShieldActive = false;
+    public double shieldTime = SHIELD_BASE_TIME;
+
     public double timeSoFar;
     public int state;
-
 
     public World( WorldListener listener, StayingAliveGame game ){
         // we create the dude and put it above the controls
@@ -118,7 +120,11 @@ public class World {
     }
 
     public void triggerShield(){
+        isShieldActive = true;
+    }
 
+    public void deactivateShield(){
+        isShieldActive = false;
     }
 
     public void triggerPowerUp(PowerUp.Type type){
@@ -132,6 +138,7 @@ public class World {
                 triggerSlowMo();
                 break;
             case POWER_UP_SHIELD:
+                triggerShield();
                 break;
             case POWER_UP_BLOW_EM_ALL:
                 triggerBlowEmAll();
@@ -165,17 +172,20 @@ public class World {
         }else {
             throwBarrier4Bullet();
         }
-
     }
 
     private void throwInitialBullet(){
-        if( timeSoFar % 100 == 0 ){
+        double bulletModule = timeSoFar % 100d;
+
+        if( bulletModule == 0 ){
             int position[] = getBulletPosition();
             Cannonball cannonball = new Cannonball( position[0], position[1], position[2] );
             mCannonballs.add( cannonball );
         }
 
-        if( timeSoFar % 250 == 0 ){
+        double powerUpModule = timeSoFar % 500;
+
+        if( powerUpModule == 0 ){
             int[] positionPowerUp = getBulletPosition();
             PowerUp powerUp = new PowerUp( positionPowerUp[0], positionPowerUp[1], positionPowerUp[2], getRandomPowerUpType() );
             mPowerUps.add( powerUp );
@@ -183,19 +193,75 @@ public class World {
     }
 
     private void throwBarrier1Bullet(){
+        if( timeSoFar % 100 == 0 ){
+            int position[] = getBulletPosition();
+            Cannonball cannonball = new Cannonball( position[0], position[1], position[2] );
+            mCannonballs.add( cannonball );
 
+            int position2[] = getBulletPosition();
+            Cannonball cannonball2 = new Cannonball( position2[0], position2[1], position2[2] );
+            mCannonballs.add( cannonball2 );
+        }
+
+        if( timeSoFar % 300 == 0 ){
+            int[] positionPowerUp = getBulletPosition();
+            PowerUp powerUp = new PowerUp( positionPowerUp[0], positionPowerUp[1], positionPowerUp[2], getRandomPowerUpType() );
+            mPowerUps.add( powerUp );
+        }
     }
 
     private void throwBarrier2Bullet(){
+        if( timeSoFar % 80 == 0 ){
+            int position[] = getBulletPosition();
+            Cannonball cannonball = new Cannonball( position[0], position[1], position[2] );
+            mCannonballs.add( cannonball );
 
+            int position2[] = getBulletPosition();
+            Cannonball cannonball2 = new Cannonball( position2[0], position2[1], position2[2] );
+            mCannonballs.add( cannonball2 );
+        }
+
+        if( timeSoFar % 400 == 0 ){
+            int[] positionPowerUp = getBulletPosition();
+            PowerUp powerUp = new PowerUp( positionPowerUp[0], positionPowerUp[1], positionPowerUp[2], getRandomPowerUpType() );
+            mPowerUps.add( powerUp );
+        }
     }
 
     private void throwBarrier3Bullet(){
+        if( timeSoFar % 60 == 0 ){
+            int position[] = getBulletPosition();
+            Cannonball cannonball = new Cannonball( position[0], position[1], position[2] );
+            mCannonballs.add( cannonball );
 
+            int position2[] = getBulletPosition();
+            Cannonball cannonball2 = new Cannonball( position2[0], position2[1], position2[2] );
+            mCannonballs.add( cannonball2 );
+        }
+
+        if( timeSoFar % 500 == 0 ){
+            int[] positionPowerUp = getBulletPosition();
+            PowerUp powerUp = new PowerUp( positionPowerUp[0], positionPowerUp[1], positionPowerUp[2], getRandomPowerUpType() );
+            mPowerUps.add( powerUp );
+        }
     }
 
     private void throwBarrier4Bullet(){
+        if( timeSoFar % 50 == 0 ){
+            int position[] = getBulletPosition();
+            Cannonball cannonball = new Cannonball( position[0], position[1], position[2] );
+            mCannonballs.add( cannonball );
 
+            int position2[] = getBulletPosition();
+            Cannonball cannonball2 = new Cannonball( position2[0], position2[1], position2[2] );
+            mCannonballs.add( cannonball2 );
+        }
+
+        if( timeSoFar % 600 == 0 ){
+            int[] positionPowerUp = getBulletPosition();
+            PowerUp powerUp = new PowerUp( positionPowerUp[0], positionPowerUp[1], positionPowerUp[2], getRandomPowerUpType() );
+            mPowerUps.add( powerUp );
+        }
     }
 
     private final int CANNON_LEFT_LOWER = 0;
