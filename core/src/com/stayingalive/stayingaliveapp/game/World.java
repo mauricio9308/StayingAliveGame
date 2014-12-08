@@ -14,10 +14,9 @@ import java.util.Random;
  * */
 public class World {
 
-    private static final int SCORE_BARRIER_1 = 1000;
-    private static final int SCORE_BARRIER_2 = 3000;
-    private static final int SCORE_BARRIER_3 = 9000;
-    private static final int SCORE_BARRIER_4 = 20000;
+    private static final int[] SCORE_BARRIERS = {1000, 2000, 3000, 4000};
+    private static final int[] TIME_BETWEEN_BULLETS = {120, 100, 80, 60, 50};
+    private static final int[] TIME_BETWEEN_POWERUPS = {240, 250, 400, 600, 800};
 
     private static final int SHIELD_BASE_TIME = 300;
 
@@ -184,107 +183,32 @@ public class World {
 
 
     private void throwBullet(){
-        if( timeSoFar > 0 && timeSoFar < SCORE_BARRIER_1){
-            throwInitialBullet();
-        }else if ( timeSoFar >= SCORE_BARRIER_1 && timeSoFar < SCORE_BARRIER_2){
-            throwBarrier1Bullet();
-        }else if( timeSoFar >= SCORE_BARRIER_2 && timeSoFar < SCORE_BARRIER_3){
-            throwBarrier2Bullet();
-        }else if( timeSoFar >= SCORE_BARRIER_3 && timeSoFar < SCORE_BARRIER_4){
-            throwBarrier3Bullet();
-        }else {
-            throwBarrier4Bullet();
+        if( timeSoFar > SCORE_BARRIERS[3] ) {
+            throwBulletNew(4);
+        } else if (timeSoFar > SCORE_BARRIERS[2]) {
+            throwBulletNew(3);
+        } else if (timeSoFar > SCORE_BARRIERS[1]) {
+            throwBulletNew(2);
+        } else if (timeSoFar > SCORE_BARRIERS[0]) {
+            throwBulletNew(1);
+        } else {
+            throwBulletNew(0);
         }
     }
 
-    private void throwInitialBullet(){
-        double bulletModule = timeSoFar % 100d;
-
-        if( bulletModule == 0 ){
+    private void throwBulletNew(int difficulty) {
+        if( timeSoFar % TIME_BETWEEN_BULLETS[difficulty] == 0 ){
             int position[] = getBulletPosition();
-            Cannonball cannonball = new Cannonball( position[0], position[1], position[2] );
+            Cannonball cannonball = new Cannonball( position[0], position[1], position[2], mRandom.nextInt(difficulty + 1) + 3 );
             mCannonballs.add( cannonball );
         }
 
-        double powerUpModule = timeSoFar % 500;
-
-        if( powerUpModule == 0 ){
+        if( timeSoFar % TIME_BETWEEN_POWERUPS[difficulty] == 0 ){
             int[] positionPowerUp = getBulletPosition();
             PowerUp powerUp = new PowerUp( positionPowerUp[0], positionPowerUp[1], positionPowerUp[2], getRandomPowerUpType() );
             mPowerUps.add( powerUp );
         }
-    }
 
-    private void throwBarrier1Bullet(){
-        if( timeSoFar % 100 == 0 ){
-            int position[] = getBulletPosition();
-            Cannonball cannonball = new Cannonball( position[0], position[1], position[2] );
-            mCannonballs.add( cannonball );
-
-            int position2[] = getBulletPosition();
-            Cannonball cannonball2 = new Cannonball( position2[0], position2[1], position2[2] );
-            mCannonballs.add( cannonball2 );
-        }
-
-        if( timeSoFar % 300 == 0 ){
-            int[] positionPowerUp = getBulletPosition();
-            PowerUp powerUp = new PowerUp( positionPowerUp[0], positionPowerUp[1], positionPowerUp[2], getRandomPowerUpType() );
-            mPowerUps.add( powerUp );
-        }
-    }
-
-    private void throwBarrier2Bullet(){
-        if( timeSoFar % 80 == 0 ){
-            int position[] = getBulletPosition();
-            Cannonball cannonball = new Cannonball( position[0], position[1], position[2] );
-            mCannonballs.add( cannonball );
-
-            int position2[] = getBulletPosition();
-            Cannonball cannonball2 = new Cannonball( position2[0], position2[1], position2[2] );
-            mCannonballs.add( cannonball2 );
-        }
-
-        if( timeSoFar % 400 == 0 ){
-            int[] positionPowerUp = getBulletPosition();
-            PowerUp powerUp = new PowerUp( positionPowerUp[0], positionPowerUp[1], positionPowerUp[2], getRandomPowerUpType() );
-            mPowerUps.add( powerUp );
-        }
-    }
-
-    private void throwBarrier3Bullet(){
-        if( timeSoFar % 60 == 0 ){
-            int position[] = getBulletPosition();
-            Cannonball cannonball = new Cannonball( position[0], position[1], position[2] );
-            mCannonballs.add( cannonball );
-
-            int position2[] = getBulletPosition();
-            Cannonball cannonball2 = new Cannonball( position2[0], position2[1], position2[2] );
-            mCannonballs.add( cannonball2 );
-        }
-
-        if( timeSoFar % 500 == 0 ){
-            int[] positionPowerUp = getBulletPosition();
-            PowerUp powerUp = new PowerUp( positionPowerUp[0], positionPowerUp[1], positionPowerUp[2], getRandomPowerUpType() );
-            mPowerUps.add( powerUp );
-        }
-    }
-
-    private void throwBarrier4Bullet(){
-        if( timeSoFar % 50 == 0 ){
-            int position[] = getBulletPosition();
-            Cannonball cannonball = new Cannonball( position[0], position[1], position[2] );
-            mCannonballs.add( cannonball );
-
-            int position2[] = getBulletPosition();
-            Cannonball cannonball2 = new Cannonball( position2[0], position2[1], position2[2] );
-            mCannonballs.add( cannonball2 );
-        }
-
-        if( timeSoFar % 600 == 0 ){
-            int[] positionPowerUp = getBulletPosition();
-            PowerUp powerUp = new PowerUp( positionPowerUp[0], positionPowerUp[1], positionPowerUp[2], getRandomPowerUpType() );
-            mPowerUps.add( powerUp );
-        }
     }
 
     private final int CANNON_LEFT_LOWER = 0;
