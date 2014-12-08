@@ -125,6 +125,7 @@ public class Dude extends DynamicGameObject{
                 height = BOUNDS_JUMPING[1];
                 break;
             case Dude.DUDE_STATE_FALL:
+            case Dude.DUDE_STATE_DUCKING:
                 width = BOUNDS_DUCKING[0];
                 height = BOUNDS_DUCKING[1];
                 break;

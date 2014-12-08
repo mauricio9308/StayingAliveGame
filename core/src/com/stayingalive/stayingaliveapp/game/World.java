@@ -111,8 +111,12 @@ public class World {
 
         for( Cannonball cannonball : mCannonballs ){
             if( mDude.mBounds.overlaps( cannonball.mBounds )){
+
                 if( mDude.mPosition.y == ViewPortConstants.CONTROLLER_HEIGHT
-                        && mDude.state == Dude.DUDE_STATE_DUCKING ){
+                        && mDude.state == Dude.DUDE_STATE_DUCKING && (
+                            cannonball.DIRECTION == Projectile.DIRECTION_LEFT ||
+                            cannonball.DIRECTION == Projectile.DIRECTION_RIGHT
+                        ) ){
                     continue;
                 }
 
@@ -230,7 +234,6 @@ public class World {
             PowerUp powerUp = new PowerUp( positionPowerUp[0], positionPowerUp[1], positionPowerUp[2], getRandomPowerUpType() );
             mPowerUps.add( powerUp );
         }
-
     }
 
     private final int CANNON_LEFT_LOWER = 0;

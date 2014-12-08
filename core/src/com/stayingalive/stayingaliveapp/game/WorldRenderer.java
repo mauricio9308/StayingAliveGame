@@ -17,6 +17,8 @@ public class WorldRenderer {
     public SpriteBatch mBatch;
     public StayingAliveGame mGame;
 
+    public TextureRegion previousDudeTexture;
+
     public WorldRenderer( SpriteBatch batch, World world, StayingAliveGame game){
         mWorld = world;
         mCamera = new OrthographicCamera(ViewPortConstants.VIEWPORT_WIDTH,
@@ -56,8 +58,10 @@ public class WorldRenderer {
             case Dude.DUDE_STATE_DUCKING:
                 keyFrame = atlas.findRegion("DudeDucking");
                 break;
-            case Dude.DUDE_STATE_NORMAL:
             case Dude.DUDE_STATE_HIT:
+                keyFrame = previousDudeTexture;
+                break;
+            case Dude.DUDE_STATE_NORMAL:
             default:
                 keyFrame = atlas.findRegion("DudeStanding");
             break;
@@ -105,6 +109,13 @@ public class WorldRenderer {
                     isFlipped /* flipX */, false /* flipY */
             );
         }
+
+        if( dude.state == Dude.DUDE_STATE_HIT ){
+            TextureRegion explosion = atlas.findRegion("Explosion");
+            mBatch.draw( explosion, ( dude.mPosition.x - ( (dude.mBounds.width / 2) * 2 )) , dude.mPosition.y, dude.mBounds.getWidth() * 3, dude.mBounds.getHeight() * 3);
+        }
+
+        previousDudeTexture = keyFrame;
     }
 
 
