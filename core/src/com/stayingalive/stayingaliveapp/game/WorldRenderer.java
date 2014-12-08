@@ -53,6 +53,7 @@ public class WorldRenderer {
                 keyFrame = atlas.findRegion("DudeJumping");
                 break;
             case Dude.DUDE_STATE_FALL:
+            case Dude.DUDE_STATE_DUCKING:
                 keyFrame = atlas.findRegion("DudeDucking");
                 break;
             case Dude.DUDE_STATE_NORMAL:

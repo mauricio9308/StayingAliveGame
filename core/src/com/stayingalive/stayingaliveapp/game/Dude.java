@@ -14,7 +14,7 @@ public class Dude extends DynamicGameObject{
     public static final int DUDE_STATE_JUMP = 1;
     public static final int DUDE_STATE_FALL = 2;
     public static final int DUDE_STATE_HIT = 3;
-
+    public static final int DUDE_STATE_DUCKING = 4;
 
     public static final float DUDE_WIDTH = 190;
     public static final float DUDE_HEIGHT = 480;
@@ -54,8 +54,18 @@ public class Dude extends DynamicGameObject{
             return;
         }
 
-        if( mVelocity.y > 0.8f && state == DUDE_STATE_NORMAL ){
-            jump();
+        if( mVelocity.y < 0.99f && state == DUDE_STATE_NORMAL ){
+            state = DUDE_STATE_DUCKING;
+        }
+
+        if( mVelocity.y >= 0  ){
+            if( mVelocity.y > .8f && state == DUDE_STATE_NORMAL ){
+                jump();
+            }else{
+                if( state == DUDE_STATE_DUCKING  ){
+                    state = DUDE_STATE_NORMAL;
+                }
+            }
         }
 
         if( state == DUDE_STATE_JUMP ){
@@ -83,10 +93,9 @@ public class Dude extends DynamicGameObject{
 
         updateBounds();
 
-
         if( mVelocity.x > 0 ){
             facing = DUDE_FACING_RIGHT;
-        }else if( mVelocity.y < 0 ){
+        }else if( mVelocity.x < 0 ){
             facing = DUDE_FACING_LEFT;
         }
 
