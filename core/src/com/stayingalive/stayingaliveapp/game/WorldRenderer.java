@@ -53,6 +53,7 @@ public class WorldRenderer {
                 keyFrame = atlas.findRegion("DudeJumping");
                 break;
             case Dude.DUDE_STATE_FALL:
+            case Dude.DUDE_STATE_DUCKING:
                 keyFrame = atlas.findRegion("DudeDucking");
                 break;
             case Dude.DUDE_STATE_NORMAL:
@@ -62,7 +63,7 @@ public class WorldRenderer {
             break;
         }
 
-        boolean isFlipped = (dude.mVelocity.x < 0);
+        boolean isFlipped = (dude.facing == Dude.DUDE_FACING_LEFT);
 
         mBatch.draw( keyFrame.getTexture(),
                 dude.mPosition.x  /* x-position */,

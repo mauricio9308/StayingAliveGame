@@ -1,5 +1,7 @@
 package com.stayingalive.stayingaliveapp.game;
 
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.stayingalive.stayingaliveapp.StayingAliveGame;
 import com.stayingalive.stayingaliveapp.screen.ViewPortConstants;
@@ -110,9 +112,29 @@ public class World {
 
         for( Cannonball cannonball : mCannonballs ){
             if( mDude.mBounds.overlaps( cannonball.mBounds )){
+                if( mDude.mPosition.y == ViewPortConstants.CONTROLLER_HEIGHT
+                        && mDude.state == Dude.DUDE_STATE_DUCKING ){
+                    continue;
+                }
+
                 if( isShieldActive ){
-                    mCannonballs.remove( cannonball );
-                    break;
+                    Rectangle intersection = new Rectangle();
+                    Intersector.intersectRectangles( mDude.mBounds, cannonball.mBounds, intersection );
+                    if(intersection.x > mDude.mBounds.x && mDude.facing == Dude.DUDE_FACING_RIGHT){
+                        //Intersects with right side
+                        mCannonballs.remove( cannonball );
+                        break;
+                    }
+                    if((intersection.x + intersection.width < mDude.mBounds.x + mDude.mBounds.width)
+                            && mDude.facing == Dude.DUDE_FACING_LEFT ){
+                        //Intersects with left side
+                        mCannonballs.remove( cannonball );
+                        break;
+                    }
+
+                    mDude.state = Dude.DUDE_STATE_HIT;
+                    state = WORLD_STATE_GAME_OVER;
+                    return;
                 }else{
                     mDude.state = Dude.DUDE_STATE_HIT;
                     state = WORLD_STATE_GAME_OVER;
@@ -302,7 +324,7 @@ public class World {
      * [2] = direction
      * */
     private int[] getBulletPosition(){
-        int position = mRandom.nextInt(5);
+        int position = mRandom.nextInt(6);
 
         int[] result = new int[3];
 
@@ -345,7 +367,7 @@ public class World {
     }
 
     public PowerUp.Type getRandomPowerUpType(){
-        int powerUpType = mRandom.nextInt(2);
+        int powerUpType = mRandom.nextInt(3);
         switch ( powerUpType ){
             case 0:
                 return PowerUp.Type.POWER_UP_SLOW_MO;
